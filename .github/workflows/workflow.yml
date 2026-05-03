@@ -29,7 +29,7 @@ jobs:
                docker pull andreir76/licenta-app
                docker run -d -p 80:8080 --name app-container --restart unless-stopped andreir76/licenta-app
                EOF
-               
+
     minikube-deploy:
         name: Kubernetes deployment
         runs-on: [self-hosted, Windows, X64, minikube]
@@ -39,6 +39,7 @@ jobs:
 
             - name: debug
               working-directory: /kubernetes/
+              shell: pwsh
               run: |
                minikube status
                kubectl get all
