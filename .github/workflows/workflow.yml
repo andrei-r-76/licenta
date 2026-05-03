@@ -1,0 +1,45 @@
+name:  Workflow CI/CD
+on: workflow_dispatch
+jobs:
+    ec2-deploy:
+        name: EC2 Instance deployment
+        runs-on: [self-hosted, X64, Linux, runner-vm]
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Terraform commands
+              working-directory: ./terraform
+              run: |
+               terraform init -input=false
+               terraform plan -input=false -no-color -parallelism=1
+               terraform apply -input=false -auto-approve -parallelism=1
+
+            - name: Docker build and push
+              run: |
+               docker build -t andreir76/licenta-app .
+               docker push andreir76/licenta-app
+
+            - name: Connect to AppVM and run the app container
+              working-directory: /home/ubuntu/key
+              run: |
+               ssh -i test_key.pem ubuntu@192.168.191.116 << 'EOF'
+               docker stop app-container || true
+               docker rm app-container || true
+               docker pull andreir76/licenta-app
+               docker run -d -p 80:8080 --name app-container --restart unless-stopped andreir76/licenta-app
+               EOF
+               
+    minikube-deploy:
+        name: Kubernetes deployment
+        runs-on: [self-hosted, Windows, X64, minikube]
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: debug
+              working-directory: /kubernetes/
+              run: |
+               minikube status
+               kubectl get all
+
