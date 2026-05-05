@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: minikube-test-deployment
+ name: app-deployment
 spec:
  replicas: 2
  selector:
   matchLabels:
-   app: licenta-test-app
+   app: licenta-app
  template:
   metadata:
-   name: licenta-test-pod
+   name: licenta-pod
    labels:
-    app: licenta-test-app
+    app: licenta-app
   spec:
    containers:
-    - name: licenta-test-container
-      image: andreir76/licenta-test
+    - name: licenta-container
+      image: andreir76/licenta-app
