@@ -33,6 +33,7 @@ jobs:
     minikube-deploy:
         name: Kubernetes deployment
         runs-on: [self-hosted, Windows, X64, minikube]
+        needs: ec2-deploy
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v4
@@ -44,4 +45,5 @@ jobs:
                minikube status
                kubectl get all
                kubectl create -f .
+               kubectl get all
 
