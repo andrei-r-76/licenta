@@ -12,7 +12,7 @@ jobs:
               working-directory: ./terraform
               run: |
                terraform init -input=false
-               terraform plan -input=false -no-color -parallelism=1
+               terraform plan -input=false -parallelism=1
                terraform apply -input=false -auto-approve -parallelism=1
 
             - name: Docker build and push
@@ -47,5 +47,6 @@ jobs:
                pwd
                ls
                kubectl apply -f . --prune -l app=licenta-app
+               kubectl rollout restart deployment app-deployment
                kubectl get all
 
