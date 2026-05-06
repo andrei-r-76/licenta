@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
  name: app-deployment
+ labels:
+  app: licenta-app
 spec:
  replicas: 2
  selector:

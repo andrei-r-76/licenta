@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
  name: app-nodeport
+ labels:
+  app: licenta-app
 spec:
  type: NodePort
  ports:
