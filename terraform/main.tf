@@ -44,6 +44,14 @@ resource "aws_vpc_security_group_ingress_rule" "accepta_http" {
     to_port=80
 }
 
+resource "aws_vpc_security_group_ingress_rule" "accepta_9090" {
+    security_group_id = aws_security_group.acces_http.id
+    cidr_ipv4="0.0.0.0/0"
+    from_port=9090
+    ip_protocol="tcp"
+    to_port=9090
+}
+
 resource "aws_subnet" "licenta_subnet" {
     vpc_id=aws_vpc.licenta_vpc.id
     cidr_block=var.licenta_vpc_cidr_block
