@@ -44,6 +44,6 @@ jobs:
               run: |
                minikube status
                kubectl get all
-               kubectl create -f .
+               kubectl apply -f .
                kubectl get all
 
