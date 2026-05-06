@@ -44,6 +44,8 @@ jobs:
               run: |
                minikube status
                kubectl get all
+               pwd
+               ls
                kubectl apply -f . --prune -l app=licenta-app
                kubectl get all
 
