@@ -11,18 +11,18 @@ resource "aws_vpc" "licenta_vpc" {
 }
 
 resource "aws_security_group" "acces" {
-    name="Porturi acceptate"
+    name="Porturile acceptate"
     description="Accepta acces pe porturile:${join(", ", var.ports)}"
     vpc_id=aws_vpc.licenta_vpc.id
 }
 
 resource "aws_vpc_security_group_ingress_rule" "porturi" {
-    count=length(var.ports)
+    for_each=var.ports
     security_group_id = aws_security_group.acces.id
     cidr_ipv4="0.0.0.0/0"
-    from_port=var.ports[count.index]
+    from_port=tonumber(each.value)
     ip_protocol="tcp"
-    to_port=var.ports[count.index]
+    to_port=tonumber(each.value)
 }
 
 resource "aws_vpc_security_group_egress_rule" "accepta_outbound" {
@@ -58,7 +58,7 @@ resource "aws_route_table_association" "licenta_association" {
 
 resource "aws_instance" "licenta_VMRunner" {
     ami=var.licenta_ami
-    instance_type=var.runner_instance
+    instance_type=var.instance_type
     tags={
         Name=var.runner_name
         description=var.runner_desc
@@ -70,7 +70,7 @@ resource "aws_instance" "licenta_VMRunner" {
 
 resource "aws_instance" "licenta_VMapp" {
     ami=var.licenta_ami
-    instance_type=var.licenta_instance_type
+    instance_type=var.instance_type
     tags={
         Name=var.app_name
         description=var.app_desc

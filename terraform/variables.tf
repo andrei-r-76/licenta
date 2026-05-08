@@ -10,10 +10,7 @@ variable "licenta_ami" {
     type=string
     default="ami-080254318c2d8932f"
 }
-variable "licenta_instance_type" {
-    type=string
-    default="t3.micro"
-}
+
 variable "runner_name" {
     type=string
     default="Test Runner VM"
@@ -30,11 +27,11 @@ variable "app_desc" {
     type=string
     default="Creat cu terraform, va fi folosit pentru a rula aplicatia"
 }
-variable "runner_instance" {
+variable "instance_type" {
     type=string
     default="t3.small"
 }
 variable "ports" {
-    type=list(number)
-    default=[22, 80, 9090, 3000]
+    type=set(string)
+    default=["22", "80", "9090", "3000"]
 }
