@@ -10,46 +10,25 @@ resource "aws_vpc" "licenta_vpc" {
     cidr_block=var.licenta_vpc_cidr_block
 }
 
-resource "aws_security_group" "acces_ssh" {
-    name="Accepta SSH"
-    description="Accepta acces SSH (port 22)"
+resource "aws_security_group" "acces" {
+    name="Porturi acceptate"
+    description="Accepta acces pe porturile:${join(", ", var.ports)}"
     vpc_id=aws_vpc.licenta_vpc.id
 }
 
-resource "aws_security_group" "acces_http" {
-    name="Accepta HTTP"
-    description="Accepta acces HTTP (port 80)"
-    vpc_id=aws_vpc.licenta_vpc.id
-}
-
-resource "aws_vpc_security_group_ingress_rule" "accepta_ssh" {
-    security_group_id = aws_security_group.acces_ssh.id
+resource "aws_vpc_security_group_ingress_rule" "porturi" {
+    for_each=var.ports
+    security_group_id = aws_security_group.acces.id
     cidr_ipv4="0.0.0.0/0"
-    from_port=22
+    from_port=each.value
     ip_protocol="tcp"
-    to_port=22
+    to_port=each.value
 }
 
 resource "aws_vpc_security_group_egress_rule" "accepta_outbound" {
-    security_group_id = aws_security_group.acces_ssh.id
+    security_group_id = aws_security_group.acces.id
     cidr_ipv4="0.0.0.0/0"
     ip_protocol="-1"
-}
-
-resource "aws_vpc_security_group_ingress_rule" "accepta_http" {
-    security_group_id = aws_security_group.acces_http.id
-    cidr_ipv4="0.0.0.0/0"
-    from_port=80
-    ip_protocol="tcp"
-    to_port=80
-}
-
-resource "aws_vpc_security_group_ingress_rule" "accepta_9090" {
-    security_group_id = aws_security_group.acces_http.id
-    cidr_ipv4="0.0.0.0/0"
-    from_port=9090
-    ip_protocol="tcp"
-    to_port=9090
 }
 
 resource "aws_subnet" "licenta_subnet" {
@@ -84,7 +63,7 @@ resource "aws_instance" "licenta_VMRunner" {
         Name=var.runner_name
         description=var.runner_desc
     }
-    vpc_security_group_ids=[aws_security_group.acces_ssh.id]
+    vpc_security_group_ids=[aws_security_group.acces.id]
     key_name=aws_key_pair.licenta_key_pair.key_name
     subnet_id=aws_subnet.licenta_subnet.id
 }
@@ -96,7 +75,7 @@ resource "aws_instance" "licenta_VMapp" {
         Name=var.app_name
         description=var.app_desc
     }
-    vpc_security_group_ids=[aws_security_group.acces_ssh.id, aws_security_group.acces_http.id]
+    vpc_security_group_ids=[aws_security_group.acces.id]
     key_name=aws_key_pair.licenta_key_pair.key_name
     subnet_id=aws_subnet.licenta_subnet.id
 }

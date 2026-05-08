@@ -34,3 +34,7 @@ variable "runner_instance" {
     type=string
     default="t3.small"
 }
+variable "ports" {
+    type=set(number)
+    default=[22, 80, 9090, 3000]
+}
