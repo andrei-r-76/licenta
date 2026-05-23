@@ -1,6 +1,6 @@
 name: Test Push Trigger
 
-on: workflow_dispatch
+on: push
 
 jobs:
   test:
