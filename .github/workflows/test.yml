@@ -3,7 +3,7 @@ name: Test Push Trigge
 on:
   push:
     branches:
-      - master
+      - test
 
 jobs:
   test:
