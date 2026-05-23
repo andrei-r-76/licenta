@@ -1,8 +1,5 @@
 name: Workflow CI/C
-on: 
-  push:
-    branches:
-      - master
+on: workflow_dispatch
 jobs:
     ec2-deploy:
         name: EC2 Instance deployment

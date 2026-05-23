@@ -1,9 +1,6 @@
 name: Test Push Trigger
 
-on:
-  push:
-    branches:
-      - test
+on: workflow_dispatch
 
 jobs:
   test:
