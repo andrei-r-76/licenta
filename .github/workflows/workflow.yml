@@ -1,5 +1,6 @@
 name:  Workflow CI/CD
-on: push
+on: 
+  push:
 jobs:
     ec2-deploy:
         name: EC2 Instance deployment
