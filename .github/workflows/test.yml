@@ -1,9 +1,6 @@
-name: Test Push Trigge
+name: Test Push Trigger
 
-on:
-  push:
-    branches:
-      - master
+on: workflow_dispatch
 
 jobs:
   test:
