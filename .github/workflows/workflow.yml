@@ -1,5 +1,4 @@
-name: Workflow CI/C
-on: push
+
 name: Workflow CI/CD
 on: push
 jobs:
