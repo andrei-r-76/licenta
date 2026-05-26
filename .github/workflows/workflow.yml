@@ -1,4 +1,5 @@
-name: Workflow CI/C
+
+name: Workflow CI/CD
 on: push
 jobs:
     ec2-deploy:
@@ -38,14 +39,10 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v4
 
-            - name: debug
+            - name: Deployment
               working-directory: ./kubernetes/
               shell: pwsh
               run: |
-               minikube status
-               kubectl get all
-               pwd
-               ls
                kubectl apply -f . --prune -l app=licenta-app
                kubectl rollout restart deployment app-deployment
                kubectl get all
