@@ -13,7 +13,7 @@ variable "licenta_ami" {
 
 variable "runner_name" {
     type=string
-    default="Test Runner VM"
+    default="Runner VM"
 }
 variable "runner_desc" {
     type=string
@@ -21,7 +21,7 @@ variable "runner_desc" {
 }
 variable "app_name" {
     type=string
-    default="Test App Container VM"
+    default="App Container VM"
 }
 variable "app_desc" {
     type=string
