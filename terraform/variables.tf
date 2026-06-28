@@ -10,7 +10,6 @@ variable "licenta_ami" {
     type=string
     default="ami-080254318c2d8932f"
 }
-
 variable "runner_name" {
     type=string
     default="Runner VM"

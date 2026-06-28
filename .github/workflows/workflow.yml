@@ -44,5 +44,5 @@ jobs:
               run: |
                kubectl apply -f . --prune -l app=licenta-app
                kubectl rollout restart deployment app-deployment
-               kubectl get all
+               
 
