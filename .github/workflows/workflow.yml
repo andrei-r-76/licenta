@@ -42,11 +42,8 @@ jobs:
               working-directory: ./kubernetes/
               shell: pwsh
               run: |
-               whoami
-               echo $env:KUBECONFIG
-               kubectl config current-context
-               kubectl config view
-               kubectl apply -f . --prune -l app=licenta-app
-               kubectl rollout restart deployment app-deployment
+               $kube="C:\SPB_DATA\.kube\config"
+               kubectl --kubeconfig $kube apply -f . --prune -l app=licenta-app
+               kubectl --kubeconfig $kube rollout restart deployment app-deployment
                
 
