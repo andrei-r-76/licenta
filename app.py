@@ -55,7 +55,7 @@ def main():
 <body>
     <div class="card">
         <h1>Salut!</h1>
-        <p>Site pentru testarea pipeline-ului</p>
+        <p>Site pentru testarea pipeline-ului.</p>
     </div>
 </body>
 </html>
